@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_08_145924) do
+ActiveRecord::Schema.define(version: 2018_08_08_210318) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2018_08_08_145924) do
     t.string "title", null: false
     t.string "content", null: false
     t.integer "status", default: 0, null: false
-    t.datetime "published"
+    t.datetime "published_on"
     t.bigint "user_id"
     t.bigint "category_id"
     t.datetime "created_at", null: false
@@ -35,10 +35,10 @@ ActiveRecord::Schema.define(version: 2018_08_08_145924) do
   end
 
   create_table "posts_tags", id: false, force: :cascade do |t|
-    t.bigint "posts_id"
-    t.bigint "tags_id"
-    t.index ["posts_id"], name: "index_posts_tags_on_posts_id"
-    t.index ["tags_id"], name: "index_posts_tags_on_tags_id"
+    t.bigint "post_id", null: false
+    t.bigint "tag_id", null: false
+    t.index ["post_id", "tag_id"], name: "index_posts_tags_on_post_id_and_tag_id"
+    t.index ["tag_id", "post_id"], name: "index_posts_tags_on_tag_id_and_post_id"
   end
 
   create_table "tags", force: :cascade do |t|

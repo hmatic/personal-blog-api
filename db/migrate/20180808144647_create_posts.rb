@@ -4,7 +4,7 @@ class CreatePosts < ActiveRecord::Migration[5.2]
       t.string :title, null: false
       t.string :content, null: false
       t.integer :status, null: false, default: 0
-      t.datetime :published
+      t.datetime :published_on
       
       t.belongs_to :user, index: true, foreign_key: true
       t.belongs_to :category, index: true, foreign_key: true
