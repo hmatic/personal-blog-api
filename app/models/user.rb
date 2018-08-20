@@ -3,6 +3,7 @@ class User < ApplicationRecord
   has_secure_token
 
   has_many :posts, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   enum role: [:user, :moderator, :admin]
 

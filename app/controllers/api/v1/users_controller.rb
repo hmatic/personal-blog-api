@@ -26,15 +26,11 @@ module Api
 
       def destroy
         user_record = authorize(User.find(params[:id]))
-        if current_user.owns(user_record)
-          if user_record.authenticate(user_params[:password])
-            user_record.destroy
-          else
-            render json: { errors: { password: ['is invalid'] } },
-                   status: :unauthorized
-          end
-        else
+        if current_user.authenticate(user_params[:password])
           user_record.destroy
+        else
+          render json: { errors: { password: ['is invalid'] } },
+                  status: :unauthorized
         end
       end
 
@@ -50,12 +46,6 @@ module Api
 
       def single_user(id)
         UsersQuery.new.with_post_count.find(id)
-      end
-
-      def confirm_password?(user_record)
-        user_record == current_user &&
-        params[:user][:password].present? &&
-        user.authenticate(params[:user][:password])
       end
     end
   end
